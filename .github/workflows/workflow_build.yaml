@@ -37,4 +37,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: endaft/builder:latest,endaft/builder:$SHORT_SHA
+          tags: endaft/builder:latest,endaft/builder:${{env.SHORT_SHA}}
