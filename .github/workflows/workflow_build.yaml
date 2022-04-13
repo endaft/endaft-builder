@@ -29,12 +29,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: 🔪 Git Short Sha
+        run: echo "GITHUB_SHA_SHORT=`git rev-parse --short HEAD`" >> $GITHUB_ENV
+
       - name: 🧱 Build and Push
         uses: docker/build-push-action@v2
-        env:
-          SHORT_SHA: ${{ GITHUB_SHA::7 }}
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: endaft/builder:latest,endaft/builder:${{ env.SHORT_SHA }}
+          tags: endaft/builder:latest,endaft/builder:${{ env.GITHUB_SHA_SHORT }}
