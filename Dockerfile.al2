@@ -1,8 +1,13 @@
+ARG TARGETARCH
+ARG TARGETPLATFORM
+
 FROM --platform=$TARGETPLATFORM amazonlinux:latest
 
 ENV IN_DOCKER="true"
 ENV PATH="/home/user/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
 
+RUN yum -y -q clean all
+RUN yum -y -q makecache fast
 RUN yum -y -q install deltarpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum -y -q update && yum -y -q upgrade
 RUN yum -y -q install git jq zip unzip make glibc lcov
@@ -11,8 +16,8 @@ RUN mkdir -p /usr/local/sbin
 
 RUN mkdir -p /home/temp
 WORKDIR /home/temp
-RUN DART_ARCH=$(if [ "$TARGETPLATFORM" = "linux/amd64" ]; then echo 'x64'; else echo 'arm64'; fi); \
-    echo "Using Dart Archive: dartsdk-linux-$DART_ARCH-release.zip for '$TARGETPLATFORM'"; \
+RUN DART_ARCH=$(if [ "$TARGETARCH" = "amd64" ]; then echo 'x64'; else echo 'arm64'; fi); \
+    echo "Using Dart Archive: dartsdk-linux-$DART_ARCH-release.zip for '$TARGETARCH'"; \
     curl -s -O "https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-$DART_ARCH-release.zip"
 RUN unzip -qq dartsdk-linux-* -d /usr/local/sbin
 
