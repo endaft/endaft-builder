@@ -1,4 +1,4 @@
-FROM amazonlinux:latest
+FROM --platform=$BUILDPLATFORM amazonlinux:latest
 
 ENV IN_DOCKER="true"
 ENV PATH="/home/user/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
