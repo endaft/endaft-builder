@@ -11,7 +11,9 @@ RUN mkdir -p /usr/local/sbin
 
 RUN mkdir -p /home/temp
 WORKDIR /home/temp
-RUN curl -s -O https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-$(if [ "$BUILDPLATFORM" = "linux/amd64" ]; then echo 'x64'; else echo 'arm64'; fi)-release.zip
+RUN DART_ARCH=$(if [ "$BUILDPLATFORM" = "linux/amd64" ]; then echo 'x64'; else echo 'arm64'; fi); \
+    echo "Using Dart Archive: dartsdk-linux-$DART_ARCH-release.zip"; \
+    curl -s -O "https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-$DART_ARCH-release.zip"
 RUN unzip -qq dartsdk-linux-* -d /usr/local/sbin
 
 WORKDIR /
