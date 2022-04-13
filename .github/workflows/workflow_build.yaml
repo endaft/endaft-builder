@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  docker:
+    name: 🐳 dockerize
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 👇 Checkout
+        uses: actions/checkout@v2
+
+      - name: 📦 Setup Docker QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: 📦 Setup Docker BuildX
+        uses: docker/setup-buildx-action@v1.6.0
+
+      - name: 🪪 Docker Login
+        uses: docker/login-action@v1.14.1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🧱 Build and Push
+        uses: docker/build-push-action@v2
+        env:
+          SHORT_SHA: ${GITHUB_SHA::7}
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: endaft/builder:latest,endaft/builder:${SHORT_SHA}
