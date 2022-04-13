@@ -7,6 +7,9 @@ on:
     types:
       - closed
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   docker:
     name: 🐳 dockerize
@@ -25,7 +28,7 @@ jobs:
       - name: 🪪 Docker Login
         uses: docker/login-action@v1.14.1
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -39,4 +42,4 @@ jobs:
           context: .
           file: Dockerfile.al2
           platforms: linux/amd64,linux/arm64
-          tags: endaft/builder:latest,endaft/builder:${{ env.GITHUB_SHA_SHORT }}
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest,${{ env.REGISTRY }}/${{ github.repository }}:${{ env.GITHUB_SHA_SHORT }}
