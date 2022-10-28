@@ -23,6 +23,8 @@ RUN unzip -qq dartsdk-linux-* -d /usr/local/sbin
 WORKDIR /
 RUN rm -rf /home/temp
 RUN dart --disable-analytics
+RUN dart pub global activate pana
+RUN dart pub global activate dartdoc
 RUN dart pub global activate coverage
 RUN dart pub global activate cobertura
 RUN dart pub global activate endaft
