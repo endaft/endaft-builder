@@ -29,7 +29,7 @@ RUN dart pub global activate coverage
 RUN dart pub global activate cobertura
 RUN dart pub global activate endaft
 
-VOLUME [ "/home/code", "/home/user" ]
+VOLUME [ "/home/code" ]
 
 WORKDIR "/home/code"
 
