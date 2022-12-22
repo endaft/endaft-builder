@@ -3,7 +3,7 @@ FROM --platform=$TARGETPLATFORM amazonlinux:latest
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
 ENV IN_DOCKER="true"
-ENV PATH="/home/user/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
+ENV PATH="~/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
 
 RUN yum -y -q clean all
 RUN yum -y -q makecache fast
