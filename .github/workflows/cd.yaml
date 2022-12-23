@@ -42,5 +42,5 @@ jobs:
           push: true
           context: .
           file: Dockerfile.al2
-          platforms: linux/amd64,linux/arm64,linux/386,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
           tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest,${{ env.REGISTRY }}/${{ github.repository }}:${{ env.GITHUB_SHA_SHORT }}
