@@ -3,7 +3,7 @@ FROM --platform=$TARGETPLATFORM amazonlinux:latest
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
 ENV IN_DOCKER="true"
-ENV PATH="/usr/local/.pub-cache-bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
+ENV PATH="$HOME/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
 
 RUN yum -y -q clean all
 RUN yum -y -q makecache fast
@@ -28,7 +28,6 @@ RUN dart pub global activate dartdoc
 RUN dart pub global activate coverage
 RUN dart pub global activate cobertura
 RUN dart pub global activate endaft
-RUN ln -s ~/.pub-cache/bin /usr/local/.pub-cache-bin
 
 VOLUME [ "/home/code" ]
 
