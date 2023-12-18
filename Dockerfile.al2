@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM amazonlinux:latest
+FROM --platform=$TARGETPLATFORM amazonlinux:2
 
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
