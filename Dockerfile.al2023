@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM amazonlinux:2
+FROM --platform=$TARGETPLATFORM public.ecr.aws/amazonlinux/amazonlinux:2023-minimal
 
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
@@ -6,13 +6,14 @@ ENV IN_DOCKER="true"
 ENV PUB_CACHE=/var/dart_pub_cache
 ENV PATH="~/.pub-cache/bin:/root/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
 
-RUN yum -y -q clean all
-RUN yum -y -q makecache fast
-RUN yum -y -q install deltarpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum -y -q update && yum -y -q upgrade
-RUN yum -y -q install git jq zip unzip make glibc lcov
-RUN yum -y clean all && rm -rf /var/cache/yum
+RUN dnf -y clean all
+RUN dnf -y update && dnf -y upgrade
+RUN dnf -y install git jq zip unzip make glibc gcc
+RUN dnf -y clean all && rm -rf /var/cache/dnf
 RUN mkdir -p /usr/local/sbin
+
+RUN git clone https://github.com/linux-test-project/lcov.git /lcov && \
+    cd /lcov && make install && rm -rf /lcov
 
 RUN mkdir -p /home/temp
 WORKDIR /home/temp

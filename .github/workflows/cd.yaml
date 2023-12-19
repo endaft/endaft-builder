@@ -36,7 +36,7 @@ jobs:
       - name: 🔪 Git Short Sha
         run: echo "GITHUB_SHA_SHORT=`git rev-parse --short HEAD`" >> $GITHUB_ENV
 
-      - name: 🧱 Build and Push
+      - name: 🧱 Build and Push AL2
         uses: docker/build-push-action@v3
         with:
           push: true
@@ -44,3 +44,12 @@ jobs:
           file: Dockerfile.al2
           platforms: linux/amd64,linux/arm64
           tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest,${{ env.REGISTRY }}/${{ github.repository }}:${{ env.GITHUB_SHA_SHORT }}
+
+      - name: 🧱 Build and Push AL2023
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          context: .
+          file: Dockerfile.al2023
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest-2023,${{ env.REGISTRY }}/${{ github.repository }}:${{ env.GITHUB_SHA_SHORT }}-2023
