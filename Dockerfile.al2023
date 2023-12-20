@@ -4,11 +4,11 @@ ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
 ENV IN_DOCKER="true"
 ENV PUB_CACHE=/var/dart_pub_cache
-ENV PATH="~/.pub-cache/bin:/root/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
+ENV PATH="/var/dart_pub_cache/bin:~/.pub-cache/bin:/root/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
 
 RUN dnf -y clean all
 RUN dnf -y update && dnf -y upgrade
-RUN dnf -y install git jq zip unzip make glibc gcc
+RUN dnf -y install git jq zip unzip make glibc gcc perl-CPAN perl-DateTime perl-Capture-Tiny
 RUN dnf -y clean all && rm -rf /var/cache/dnf
 RUN mkdir -p /usr/local/sbin
 

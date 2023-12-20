@@ -4,7 +4,7 @@ ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
 ENV IN_DOCKER="true"
 ENV PUB_CACHE=/var/dart_pub_cache
-ENV PATH="~/.pub-cache/bin:/root/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
+ENV PATH="/var/dart_pub_cache/bin:~/.pub-cache/bin:/root/.pub-cache/bin:/usr/local/sbin/dart-sdk/bin:/usr/local/sbin/dart-sdk/lib:/usr/local/sbin/dart-sdk/include:$PATH"
 
 RUN yum -y -q clean all
 RUN yum -y -q makecache fast
